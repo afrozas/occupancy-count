@@ -138,13 +138,12 @@ raw_data_df.head()
 
 
 ```python
-#display all data replace result by desired raw_data
-label = 'avgSpeed'
+label = 'vehicleCount'
 result=raw_data_df
 result['date']=pd.to_datetime(result['date'])
 data=result.loc[:, [label]]
 data = data.set_index(result.date)
-data['avgSpeed'] = pd.to_numeric(data['avgSpeed'],downcast='float',errors='coerce')
+data[label] = pd.to_numeric(data[label],downcast='float',errors='coerce')
 ```
 
 
@@ -173,7 +172,7 @@ data.head()
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>avgSpeed</th>
+      <th>vehicleCount</th>
     </tr>
     <tr>
       <th>date</th>
@@ -183,23 +182,23 @@ data.head()
   <tbody>
     <tr>
       <th>2014-02-13 11:30:00</th>
-      <td>56.0</td>
+      <td>7.0</td>
     </tr>
     <tr>
       <th>2014-02-13 11:35:00</th>
-      <td>53.0</td>
+      <td>5.0</td>
     </tr>
     <tr>
       <th>2014-02-13 11:40:00</th>
-      <td>53.0</td>
+      <td>6.0</td>
     </tr>
     <tr>
       <th>2014-02-13 11:45:00</th>
-      <td>52.0</td>
+      <td>3.0</td>
     </tr>
     <tr>
       <th>2014-02-13 11:50:00</th>
-      <td>57.0</td>
+      <td>6.0</td>
     </tr>
   </tbody>
 </table>
@@ -233,7 +232,7 @@ data.dropna().describe()
   <thead>
     <tr style="text-align: right;">
       <th></th>
-      <th>avgSpeed</th>
+      <th>vehicleCount</th>
     </tr>
   </thead>
   <tbody>
@@ -243,11 +242,11 @@ data.dropna().describe()
     </tr>
     <tr>
       <th>mean</th>
-      <td>4.829084e+01</td>
+      <td>5.292092e+00</td>
     </tr>
     <tr>
       <th>std</th>
-      <td>2.349162e+01</td>
+      <td>7.721745e+00</td>
     </tr>
     <tr>
       <th>min</th>
@@ -255,19 +254,19 @@ data.dropna().describe()
     </tr>
     <tr>
       <th>25%</th>
-      <td>3.100000e+01</td>
+      <td>0.000000e+00</td>
     </tr>
     <tr>
       <th>50%</th>
-      <td>4.400000e+01</td>
+      <td>2.000000e+00</td>
     </tr>
     <tr>
       <th>75%</th>
-      <td>6.200000e+01</td>
+      <td>7.000000e+00</td>
     </tr>
     <tr>
       <th>max</th>
-      <td>1.490000e+02</td>
+      <td>1.210000e+02</td>
     </tr>
   </tbody>
 </table>
@@ -279,7 +278,7 @@ data.dropna().describe()
 
 
 ```python
-label = 'avgSpeed'
+label = 'vehicleCount'
 daily = data.resample('D').mean()
 daily.dropna(inplace=True)
 daily.plot(style=[':', '--', '-'],
@@ -299,20 +298,20 @@ hourly.plot(style=[':', '--', '-'],
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7f15a1d94ba8>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7f1977efd748>
 
 
 
 
-![png](avg_speed_md/output_8_1.png)
+![png](vehicleCountwithLSTM_md/output_8_1.png)
 
 
 
-![png](avg_speed_md/output_8_2.png)
+![png](vehicleCountwithLSTM_md/output_8_2.png)
 
 
 
-![png](avg_speed_md/output_8_3.png)
+![png](vehicleCountwithLSTM_md/output_8_3.png)
 
 
 
@@ -338,11 +337,11 @@ plt.show()
 ```
 
 
-![png](avg_speed_md/output_9_0.png)
+![png](vehicleCountwithLSTM_md/output_9_0.png)
 
 
 
-![png](avg_speed_md/output_9_1.png)
+![png](vehicleCountwithLSTM_md/output_9_1.png)
 
 
 
@@ -356,12 +355,12 @@ daily.rolling(30, center=True).mean().plot(style=[':', '--', '-'],
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7f15aba41710>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7f1975c79048>
 
 
 
 
-![png](avg_speed_md/output_10_1.png)
+![png](vehicleCountwithLSTM_md/output_10_1.png)
 
 
 
@@ -373,7 +372,7 @@ by_time.plot(xticks=hourly_ticks, style=[':', '--', '-'],
 ```
 
 
-![png](avg_speed_md/output_11_0.png)
+![png](vehicleCountwithLSTM_md/output_11_0.png)
 
 
 
@@ -383,7 +382,7 @@ plt.xlabel('Year', fontsize=20);
 ```
 
 
-![png](avg_speed_md/output_12_0.png)
+![png](vehicleCountwithLSTM_md/output_12_0.png)
 
 
 ## Additional explorations
@@ -418,34 +417,34 @@ df.head()
     <tr style="text-align: right;">
       <th></th>
       <th>date</th>
-      <th>avgSpeed</th>
+      <th>vehicleCount</th>
     </tr>
   </thead>
   <tbody>
     <tr>
       <th>0</th>
       <td>2014-02-13 11:30:00</td>
-      <td>45.813333</td>
+      <td>10.280000</td>
     </tr>
     <tr>
       <th>1</th>
       <td>2014-02-13 11:35:00</td>
-      <td>45.273333</td>
+      <td>10.060000</td>
     </tr>
     <tr>
       <th>2</th>
       <td>2014-02-13 11:40:00</td>
-      <td>44.106667</td>
+      <td>10.473333</td>
     </tr>
     <tr>
       <th>3</th>
       <td>2014-02-13 11:45:00</td>
-      <td>44.640000</td>
+      <td>10.040000</td>
     </tr>
     <tr>
       <th>4</th>
       <td>2014-02-13 11:50:00</td>
-      <td>45.726667</td>
+      <td>9.166667</td>
     </tr>
   </tbody>
 </table>
@@ -461,7 +460,7 @@ plt.show()
 ```
 
 
-![png](avg_speed_md/output_15_0.png)
+![png](vehicleCountwithLSTM_md/output_15_0.png)
 
 
 
@@ -477,7 +476,7 @@ plt.show()
 ```
 
 
-![png](avg_speed_md/output_16_0.png)
+![png](vehicleCountwithLSTM_md/output_16_0.png)
 
 
 
@@ -488,7 +487,7 @@ plt.show()
 ```
 
 
-![png](avg_speed_md/output_17_0.png)
+![png](vehicleCountwithLSTM_md/output_17_0.png)
 
 
 
@@ -499,7 +498,7 @@ plt.show()
 ```
 
 
-![png](avg_speed_md/output_18_0.png)
+![png](vehicleCountwithLSTM_md/output_18_0.png)
 
 
 
@@ -514,7 +513,7 @@ plt.show()
 
 
 
-![png](avg_speed_md/output_19_1.png)
+![png](vehicleCountwithLSTM_md/output_19_1.png)
 
 
 
@@ -525,7 +524,7 @@ plt.show()
 ```
 
 
-![png](avg_speed_md/output_20_0.png)
+![png](vehicleCountwithLSTM_md/output_20_0.png)
 
 
 # LSTM prediction
@@ -608,67 +607,72 @@ model.compile(loss='mae', optimizer='adam')
 history = model.fit(trainX, trainY, epochs=30, batch_size=10, validation_data=(testX, testY), verbose=1, shuffle=False)
 ```
 
+    /home/enigmaeth/miniconda3/envs/tf/lib/python3.6/site-packages/h5py/__init__.py:36: FutureWarning: Conversion of the second argument of issubdtype from `float` to `np.floating` is deprecated. In future, it will be treated as `np.float64 == np.dtype(float).type`.
+      from ._conv import register_converters as _register_converters
+    Using TensorFlow backend.
+
+
     Train on 2191 samples, validate on 544 samples
     Epoch 1/30
-    2191/2191 [==============================] - 3s 1ms/step - loss: 0.0543 - val_loss: 0.0356
+    2191/2191 [==============================] - 14s 6ms/step - loss: 0.1400 - val_loss: 0.0842
     Epoch 2/30
-    2191/2191 [==============================] - 2s 781us/step - loss: 0.0336 - val_loss: 0.0309
+    2191/2191 [==============================] - 2s 748us/step - loss: 0.0838 - val_loss: 0.0622
     Epoch 3/30
-    2191/2191 [==============================] - 2s 779us/step - loss: 0.0313 - val_loss: 0.0287
+    2191/2191 [==============================] - 2s 761us/step - loss: 0.0685 - val_loss: 0.0544
     Epoch 4/30
-    2191/2191 [==============================] - 2s 788us/step - loss: 0.0301 - val_loss: 0.0271
+    2191/2191 [==============================] - 2s 750us/step - loss: 0.0642 - val_loss: 0.0516
     Epoch 5/30
-    2191/2191 [==============================] - 2s 794us/step - loss: 0.0290 - val_loss: 0.0262
+    2191/2191 [==============================] - 2s 893us/step - loss: 0.0614 - val_loss: 0.0501
     Epoch 6/30
-    2191/2191 [==============================] - 2s 786us/step - loss: 0.0287 - val_loss: 0.0254
+    2191/2191 [==============================] - 2s 964us/step - loss: 0.0589 - val_loss: 0.0481
     Epoch 7/30
-    2191/2191 [==============================] - 2s 788us/step - loss: 0.0281 - val_loss: 0.0254
+    2191/2191 [==============================] - 2s 816us/step - loss: 0.0567 - val_loss: 0.0467
     Epoch 8/30
-    2191/2191 [==============================] - 2s 785us/step - loss: 0.0275 - val_loss: 0.0249
+    2191/2191 [==============================] - 2s 918us/step - loss: 0.0548 - val_loss: 0.0457
     Epoch 9/30
-    2191/2191 [==============================] - 2s 792us/step - loss: 0.0271 - val_loss: 0.0241
+    2191/2191 [==============================] - 2s 830us/step - loss: 0.0535 - val_loss: 0.0462
     Epoch 10/30
-    2191/2191 [==============================] - 2s 921us/step - loss: 0.0269 - val_loss: 0.0243
+    2191/2191 [==============================] - 2s 889us/step - loss: 0.0528 - val_loss: 0.0443
     Epoch 11/30
-    2191/2191 [==============================] - 2s 938us/step - loss: 0.0269 - val_loss: 0.0241
+    2191/2191 [==============================] - 2s 732us/step - loss: 0.0524 - val_loss: 0.0440
     Epoch 12/30
-    2191/2191 [==============================] - 2s 1ms/step - loss: 0.0267 - val_loss: 0.0239
+    2191/2191 [==============================] - 2s 819us/step - loss: 0.0526 - val_loss: 0.0437
     Epoch 13/30
-    2191/2191 [==============================] - 2s 1ms/step - loss: 0.0266 - val_loss: 0.0240
+    2191/2191 [==============================] - 2s 762us/step - loss: 0.0518 - val_loss: 0.0436
     Epoch 14/30
-    2191/2191 [==============================] - 2s 949us/step - loss: 0.0265 - val_loss: 0.0239
+    2191/2191 [==============================] - 2s 902us/step - loss: 0.0511 - val_loss: 0.0429
     Epoch 15/30
-    2191/2191 [==============================] - 2s 972us/step - loss: 0.0264 - val_loss: 0.0238
+    2191/2191 [==============================] - 2s 812us/step - loss: 0.0510 - val_loss: 0.0438
     Epoch 16/30
-    2191/2191 [==============================] - 2s 1ms/step - loss: 0.0263 - val_loss: 0.0238
+    2191/2191 [==============================] - 2s 754us/step - loss: 0.0505 - val_loss: 0.0435
     Epoch 17/30
-    2191/2191 [==============================] - 2s 969us/step - loss: 0.0261 - val_loss: 0.0237
+    2191/2191 [==============================] - 2s 745us/step - loss: 0.0499 - val_loss: 0.0417
     Epoch 18/30
-    2191/2191 [==============================] - 2s 995us/step - loss: 0.0263 - val_loss: 0.0237
+    2191/2191 [==============================] - 3s 1ms/step - loss: 0.0495 - val_loss: 0.0425
     Epoch 19/30
-    2191/2191 [==============================] - 2s 937us/step - loss: 0.0263 - val_loss: 0.0239
+    2191/2191 [==============================] - 2s 1ms/step - loss: 0.0485 - val_loss: 0.0414
     Epoch 20/30
-    2191/2191 [==============================] - 2s 952us/step - loss: 0.0261 - val_loss: 0.0236
+    2191/2191 [==============================] - 2s 854us/step - loss: 0.0484 - val_loss: 0.0412
     Epoch 21/30
-    2191/2191 [==============================] - 2s 1ms/step - loss: 0.0261 - val_loss: 0.0237
+    2191/2191 [==============================] - 2s 838us/step - loss: 0.0480 - val_loss: 0.0409
     Epoch 22/30
-    2191/2191 [==============================] - 2s 980us/step - loss: 0.0262 - val_loss: 0.0237
+    2191/2191 [==============================] - 2s 823us/step - loss: 0.0473 - val_loss: 0.0409
     Epoch 23/30
-    2191/2191 [==============================] - 2s 969us/step - loss: 0.0261 - val_loss: 0.0237
+    2191/2191 [==============================] - 2s 860us/step - loss: 0.0471 - val_loss: 0.0425
     Epoch 24/30
-    2191/2191 [==============================] - 2s 978us/step - loss: 0.0261 - val_loss: 0.0236
+    2191/2191 [==============================] - 2s 856us/step - loss: 0.0468 - val_loss: 0.0414
     Epoch 25/30
-    2191/2191 [==============================] - 3s 1ms/step - loss: 0.0260 - val_loss: 0.0236
+    2191/2191 [==============================] - 2s 797us/step - loss: 0.0465 - val_loss: 0.0411
     Epoch 26/30
-    2191/2191 [==============================] - 3s 1ms/step - loss: 0.0259 - val_loss: 0.0237
+    2191/2191 [==============================] - 2s 764us/step - loss: 0.0464 - val_loss: 0.0410
     Epoch 27/30
-    2191/2191 [==============================] - 2s 994us/step - loss: 0.0259 - val_loss: 0.0238
+    2191/2191 [==============================] - 2s 1ms/step - loss: 0.0464 - val_loss: 0.0406
     Epoch 28/30
-    2191/2191 [==============================] - 2s 971us/step - loss: 0.0259 - val_loss: 0.0236
+    2191/2191 [==============================] - 2s 1ms/step - loss: 0.0461 - val_loss: 0.0406
     Epoch 29/30
-    2191/2191 [==============================] - 2s 1ms/step - loss: 0.0259 - val_loss: 0.0237
+    2191/2191 [==============================] - 2s 924us/step - loss: 0.0461 - val_loss: 0.0413
     Epoch 30/30
-    2191/2191 [==============================] - 2s 1ms/step - loss: 0.0260 - val_loss: 0.0236
+    2191/2191 [==============================] - 2s 828us/step - loss: 0.0460 - val_loss: 0.0409
 
 
 
@@ -681,12 +685,12 @@ plt.legend()
 
 
 
-    <matplotlib.legend.Legend at 0x7f15047fcf60>
+    <matplotlib.legend.Legend at 0x7f19484099e8>
 
 
 
 
-![png](avg_speed_md/output_29_1.png)
+![png](vehicleCountwithLSTM_md/output_29_1.png)
 
 
 
@@ -700,12 +704,12 @@ plt.legend()
 
 
 
-    <matplotlib.legend.Legend at 0x7f15047501d0>
+    <matplotlib.legend.Legend at 0x7f19483aefd0>
 
 
 
 
-![png](avg_speed_md/output_30_1.png)
+![png](vehicleCountwithLSTM_md/output_30_1.png)
 
 
 
@@ -718,7 +722,7 @@ rmse = sqrt(mean_squared_error(testY_inverse, yhat_inverse))
 print('Test RMSE: %.3f' % rmse)
 ```
 
-    Test RMSE: 1.901
+    Test RMSE: 1.078
 
 
 
@@ -731,12 +735,12 @@ plt.legend()
 
 
 
-    <matplotlib.legend.Legend at 0x7f15046d1400>
+    <matplotlib.legend.Legend at 0x7f19483292b0>
 
 
 
 
-![png](avg_speed_md/output_32_1.png)
+![png](vehicleCountwithLSTM_md/output_32_1.png)
 
 
 # Clustering
@@ -780,7 +784,7 @@ temp.head()
   <thead>
     <tr>
       <th></th>
-      <th colspan="21" halign="left">avgSpeed</th>
+      <th colspan="21" halign="left">vehicleCount</th>
     </tr>
     <tr>
       <th>dy</th>
@@ -835,122 +839,122 @@ temp.head()
     <tr>
       <th>00:00:00</th>
       <td>0.0</td>
-      <td>52.869565</td>
-      <td>51.067416</td>
-      <td>51.080000</td>
-      <td>53.166667</td>
-      <td>52.680000</td>
-      <td>51.315789</td>
-      <td>52.233333</td>
-      <td>50.663934</td>
-      <td>50.730159</td>
+      <td>0.271739</td>
+      <td>0.561798</td>
+      <td>0.966667</td>
+      <td>0.133333</td>
+      <td>0.253333</td>
+      <td>0.305263</td>
+      <td>0.500000</td>
+      <td>0.286885</td>
+      <td>1.111111</td>
       <td>...</td>
-      <td>49.533333</td>
-      <td>53.020000</td>
-      <td>52.340000</td>
-      <td>49.580000</td>
-      <td>53.673333</td>
-      <td>49.846667</td>
-      <td>50.780000</td>
-      <td>28.0</td>
-      <td>53.666667</td>
-      <td>51.512821</td>
+      <td>0.313333</td>
+      <td>0.506667</td>
+      <td>0.186667</td>
+      <td>0.293333</td>
+      <td>0.560000</td>
+      <td>0.253333</td>
+      <td>0.306667</td>
+      <td>0.0</td>
+      <td>1.333333</td>
+      <td>0.256410</td>
     </tr>
     <tr>
       <th>00:05:00</th>
       <td>0.0</td>
-      <td>53.021739</td>
-      <td>51.619565</td>
-      <td>51.773333</td>
-      <td>53.700000</td>
-      <td>52.660000</td>
-      <td>52.171717</td>
-      <td>52.337079</td>
-      <td>49.697917</td>
-      <td>49.851351</td>
+      <td>0.228261</td>
+      <td>0.586957</td>
+      <td>0.820000</td>
+      <td>0.153333</td>
+      <td>0.186667</td>
+      <td>0.373737</td>
+      <td>0.370787</td>
+      <td>0.229167</td>
+      <td>0.972973</td>
       <td>...</td>
-      <td>49.933333</td>
-      <td>53.140000</td>
-      <td>53.766667</td>
-      <td>49.980000</td>
-      <td>53.589041</td>
-      <td>60.142857</td>
-      <td>52.346667</td>
+      <td>0.386667</td>
+      <td>0.346667</td>
+      <td>0.193333</td>
+      <td>0.160000</td>
+      <td>0.876712</td>
+      <td>0.285714</td>
+      <td>0.246667</td>
       <td>0.0</td>
       <td>0.000000</td>
-      <td>53.093960</td>
+      <td>0.308725</td>
     </tr>
     <tr>
       <th>00:10:00</th>
       <td>0.0</td>
-      <td>53.494624</td>
-      <td>51.445946</td>
+      <td>0.193548</td>
+      <td>0.756757</td>
       <td>0.000000</td>
-      <td>53.126667</td>
-      <td>53.480000</td>
-      <td>50.921348</td>
-      <td>52.648936</td>
-      <td>49.628866</td>
-      <td>48.786517</td>
+      <td>0.173333</td>
+      <td>0.166667</td>
+      <td>0.370787</td>
+      <td>0.361702</td>
+      <td>0.309278</td>
+      <td>0.853933</td>
       <td>...</td>
-      <td>49.013333</td>
-      <td>53.193333</td>
-      <td>53.460000</td>
-      <td>49.573333</td>
-      <td>53.926667</td>
+      <td>0.480000</td>
+      <td>0.446667</td>
+      <td>0.160000</td>
+      <td>0.160000</td>
+      <td>0.806667</td>
       <td>0.000000</td>
       <td>0.000000</td>
       <td>0.0</td>
-      <td>54.493333</td>
-      <td>52.613333</td>
+      <td>0.666667</td>
+      <td>0.220000</td>
     </tr>
     <tr>
       <th>00:15:00</th>
       <td>0.0</td>
-      <td>53.325843</td>
-      <td>52.705882</td>
-      <td>51.826667</td>
-      <td>52.420000</td>
-      <td>53.793333</td>
-      <td>51.691358</td>
-      <td>50.326087</td>
-      <td>51.227273</td>
-      <td>50.108108</td>
+      <td>0.202247</td>
+      <td>1.088235</td>
+      <td>0.926667</td>
+      <td>0.113333</td>
+      <td>0.246667</td>
+      <td>0.506173</td>
+      <td>0.369565</td>
+      <td>0.363636</td>
+      <td>0.905405</td>
       <td>...</td>
-      <td>48.340000</td>
-      <td>52.306667</td>
-      <td>52.793333</td>
-      <td>49.173333</td>
-      <td>53.280000</td>
-      <td>51.746667</td>
+      <td>0.460000</td>
+      <td>0.580000</td>
+      <td>0.100000</td>
+      <td>0.326667</td>
+      <td>0.793333</td>
+      <td>0.453333</td>
       <td>0.000000</td>
-      <td>74.0</td>
-      <td>53.533333</td>
-      <td>52.740000</td>
+      <td>1.0</td>
+      <td>0.933333</td>
+      <td>0.193333</td>
     </tr>
     <tr>
       <th>00:20:00</th>
       <td>0.0</td>
-      <td>55.530120</td>
-      <td>52.790909</td>
-      <td>50.860000</td>
-      <td>51.966667</td>
-      <td>53.960000</td>
-      <td>51.541667</td>
-      <td>52.966102</td>
-      <td>48.923077</td>
-      <td>50.450704</td>
+      <td>0.397590</td>
+      <td>0.827273</td>
+      <td>0.646667</td>
+      <td>0.086667</td>
+      <td>0.160000</td>
+      <td>0.427083</td>
+      <td>0.245763</td>
+      <td>0.274725</td>
+      <td>0.746479</td>
       <td>...</td>
-      <td>48.400000</td>
-      <td>53.566667</td>
-      <td>52.300000</td>
-      <td>50.466667</td>
-      <td>52.986667</td>
-      <td>51.806667</td>
+      <td>0.433333</td>
+      <td>0.626667</td>
+      <td>0.133333</td>
+      <td>0.380000</td>
+      <td>0.820000</td>
+      <td>0.333333</td>
       <td>0.000000</td>
       <td>0.0</td>
-      <td>53.780000</td>
-      <td>51.153846</td>
+      <td>0.573333</td>
+      <td>0.256410</td>
     </tr>
   </tbody>
 </table>
@@ -967,12 +971,12 @@ temp.plot(figsize=(15, 35))
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7f15a1cc1c50>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7f1948364da0>
 
 
 
 
-![png](avg_speed_md/output_35_1.png)
+![png](vehicleCountwithLSTM_md/output_35_1.png)
 
 
 
@@ -985,12 +989,12 @@ temp.iloc[:,2].plot(x=temp.index.get_level_values)
 
 
 
-    <matplotlib.axes._subplots.AxesSubplot at 0x7f15048610f0>
+    <matplotlib.axes._subplots.AxesSubplot at 0x7f18bb6d4e48>
 
 
 
 
-![png](avg_speed_md/output_36_1.png)
+![png](vehicleCountwithLSTM_md/output_36_1.png)
 
 
 
@@ -1010,7 +1014,7 @@ for i, r in enumerate([0,1,2,3,4,5,6,7,8,9,10],1):
 ```
 
 
-![png](avg_speed_md/output_37_0.png)
+![png](vehicleCountwithLSTM_md/output_37_0.png)
 
 
 
@@ -1034,7 +1038,7 @@ plt.show()
 ```
 
 
-![png](avg_speed_md/output_39_0.png)
+![png](vehicleCountwithLSTM_md/output_39_0.png)
 
 
 
@@ -1055,5 +1059,5 @@ plt.show()
 ```
 
 
-![png](avg_speed_md/output_40_0.png)
+![png](vehicleCountwithLSTM_md/output_40_0.png)
 
